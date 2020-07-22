@@ -1,0 +1,6 @@
+{
+    "name": "OSM GEOData Tool",
+    "version": "1.0",
+    "description": "Fetches relevant Wikipedia links for OSM loacations.",
+    "manifest_version": 2
+}
