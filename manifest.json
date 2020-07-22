@@ -2,5 +2,17 @@
     "name": "OSM GEOData Tool",
     "version": "1.0",
     "description": "Fetches relevant Wikipedia links for OSM loacations.",
-    "manifest_version": 2
+    "manifest_version": 2,
+    
+    "content_scripts": {
+        "matches": ["https://www.openstreetmap.org/node/*", "https://www.openstreetmap.org/way/*"],
+        "js": ["content.js"]
+    },
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_title": "GEOData"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    }    
 }
