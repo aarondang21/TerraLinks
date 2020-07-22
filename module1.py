@@ -18,17 +18,17 @@ print(articles2)
 print("\n")
 
 #initialize lists to store page IDs of articles
-pageid1 = []
-pageid2 = []
+#pageid1 = []
+#pageid2 = []
 
-for obj in articles1:
-    pageid1.append(obj.wikipedia.WikipediaPage.parent_id) #try something else this doesn't work bc list contains strings not WikipediaPage objects
+#for obj in articles1:
+#    pageid1.append(obj.wikipedia.WikipediaPage.parent_id) #try something else this doesn't work bc list contains strings not WikipediaPage objects
 
-print(pageid1)
+#print(pageid1)
 
-for obj in articles2:
-    pageid1.append(obj.wikipedia.WikipediaPage.parent_id) #same here
+#for obj in articles2:
+#    pageid1.append(obj.wikipedia.WikipediaPage.parent_id) #same here
 
-print(pageid2)
+#print(pageid2)
 
 #compare page IDs from both lists and return web address of articles contained in both lists
