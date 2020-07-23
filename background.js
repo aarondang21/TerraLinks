@@ -10,9 +10,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
           popup: 'popup.html'
         });
       } else {
-        chrome.browserAction.setPopup({
+        chrome.pageAction.setPopup({
           tabId: tabId,
-          popup: 'popup_sign_in.html'
+          popup: 'popup_nolinks.html'
         });
       }
       });
@@ -24,6 +24,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     });
 });
 chrome.runtime.onInstalled.addListener(function() {
+  chrome.storage.local.set({'links_found': false});
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
       chrome.declarativeContent.onPageChanged.addRules([{
         conditions: [new chrome.declarativeContent.PageStateMatcher({
