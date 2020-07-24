@@ -1,0 +1,62 @@
+h2 {
+    color: white;
+    font-size: 18px;
+    float: left;
+    margin-left: 5px;
+    padding-top: 12px;
+}
+.header {
+    background-color: black;
+    text-align: center;
+    width: 400px;
+    margin: 0px;
+    overflow: hidden;
+}
+.icon {
+    float: left;
+    padding: 8px;
+    max-width: 95%;
+}
+.linksFound {
+    background-color: lightgreen;
+    font-size: 16px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 4px;
+    border: 1px;
+    margin: 10px;
+}
+.linksNotFound {
+    background-color: lightcoral;
+    font-size: 16px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 4px;
+    border: 1px;
+    margin: 10px;
+}
+.back {
+    background-color: white;
+    height: 200px;
+}
+.msg {
+    font-size: 16px;
+    background-color: lightgrey;
+    border-radius: 4px;
+    text-align: center;
+    padding: 4px;
+    border: 1px;
+    margin: 10px;
+    height: 30%;
+    line-height: 58px;
+}
+.settings {
+    float: right;
+    max-width: 4%;
+    padding-right: 15px;
+    padding-top: 15px;
+}
+*, html {
+    margin:0;
+    padding:0;  
+}
