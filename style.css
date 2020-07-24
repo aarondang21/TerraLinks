@@ -39,7 +39,7 @@ h2 {
     background-color: white;
     height: 200px;
 }
-.msg {
+.msgN {
     font-size: 16px;
     background-color: lightgrey;
     border-radius: 4px;
@@ -49,6 +49,16 @@ h2 {
     margin: 10px;
     height: 30%;
     line-height: 58px;
+}
+.msgF {
+    font-size: 16px;
+    background-color: lightgrey;
+    border-radius: 4px;
+    text-align: center;
+    padding: 4px;
+    border: 1px;
+    margin: 10px;
+    height: 30%;
 }
 .settings {
     float: right;
