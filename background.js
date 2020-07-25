@@ -24,7 +24,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     });
 });
 chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.local.set({'links_found': false});
+  chrome.storage.local.set({'links_found': false}); // move this somewhere else later
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
       chrome.declarativeContent.onPageChanged.addRules([{
         conditions: [new chrome.declarativeContent.PageStateMatcher({
