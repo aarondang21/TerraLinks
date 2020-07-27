@@ -18,7 +18,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
       });
     chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
         let url = tabs[0].url;
-        if (url.includes("https://www.openstreetmap.org/way/") || url.includes("https://www.openstreetmap.org/node/")) {
+        if (url.includes("https://www.openstreetmap.org/way/") || url.includes("https://www.openstreetmap.org/node/")
+        || url.includes("https://www.openstreetmap.org/relation/")) {
             alert("You are at an OSM Location!");
         }
     });
