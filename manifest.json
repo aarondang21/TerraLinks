@@ -6,7 +6,7 @@
     
     "content_scripts": [ {
         "matches": ["https://www.openstreetmap.org/node/*", "https://www.openstreetmap.org/way/*", "https://www.openstreetmap.org/relation/"],
-        "js": ["content.js"]
+        "js": ["thirdParty/jquery-3.5.1.js", "content.js"]
     } ],
     "page_action": {
         "default_popup": "popup_nolinks.html",
@@ -25,7 +25,7 @@
         "128": "images/map_128.png"
       },
     "background": {
-        "scripts": ["background.js"],
+        "scripts": ["thirdParty/jquery-3.5.1.js", "background.js"],
         "persistent": false
     },
     "permissions": [
