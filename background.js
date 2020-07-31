@@ -12,11 +12,27 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         var locType = pathArray[3]; // way, relation or node
         var osm_id = pathArray[4]; // unique location identifier in OSM
         var queryUrl = `https://overpass-api.de/api/interpreter?data=[out:json][timeout:25];${locType}(${osm_id});out tags bb;`;
-        const Http = new XMLHttpRequest();
-        Http.open("GET", queryUrl);
-        Http.send();
-        Http.onreadystatechange = (e) => {
-          console.log(Http.responseText);
+        const req = new XMLHttpRequest();
+        req.open("GET", queryUrl);
+        req.responseType = 'json';
+        req.send();
+        var osmData; // stores OSM data in JSON format
+        var lat; // latitude
+        var lon; // longitude
+        var name // location's name
+        req.onreadystatechange = (e) => {
+          osmData = req.response;
+          console.log(osmData);
+        }
+        // The following lines gather name, longitude and latidude from OSM JSON
+        name = osmData.elements['0'].tags['name:en']; // fix this
+        if(locType == 'way' || locType == 'relation') {
+          lat = (osmData.minlat + osmData.maxlat) / 2;
+          lon = (osmData.minlon + osmData.maxlon) / 2;
+        }
+        else {
+          lat = osmData.lat;
+          lon = osmData.lon;
         }
       }
     });
