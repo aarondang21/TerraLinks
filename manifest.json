@@ -1,12 +1,12 @@
 {
     "name": "OSM GEOData Tool",
-    "version": "1.0",
+    "version": "0.1.0",
     "description": "Fetches relevant Wikipedia links for OSM locations.",
     "manifest_version": 2,
     
     "content_scripts": [ {
         "matches": ["https://www.openstreetmap.org/node/*", "https://www.openstreetmap.org/way/*", "https://www.openstreetmap.org/relation/"],
-        "js": ["thirdParty/jquery-3.5.1.js", "content.js"]
+        "js": ["content.js"]
     } ],
     "page_action": {
         "default_popup": "popup_nolinks.html",
@@ -25,12 +25,14 @@
         "128": "images/map_128.png"
       },
     "background": {
-        "scripts": ["thirdParty/jquery-3.5.1.js", "background.js"],
+        "scripts": ["background.js"],
         "persistent": false
     },
     "permissions": [
         "tabs",
         "storage",
-        "declarativeContent"
+        "declarativeContent",
+        "https://www.openstreetmap.org/*",
+        "https://en.wikipedia.org/*"
     ]
 }
