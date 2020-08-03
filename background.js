@@ -50,7 +50,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
                 console.log(lon);
               }
               if (tags.place == 'city' || tags.type == 'boundary') {
-                searchFunc(lat, lon, name);
+                links_found = searchFunc(lat, lon, name);
               }
               else {
                 links_found = geoFunc(lat, lon, name);
