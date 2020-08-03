@@ -4,7 +4,7 @@
 // For when we find links in the algorithm
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete') {
-    chrome.storage.local.set({ 'links_found': false });
+    var links_found = false;
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
       let url = tabs[0].url;
       if ((url.includes("https://www.openstreetmap.org/way/") || url.includes("https://www.openstreetmap.org/node/")
@@ -26,14 +26,21 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
           if (this.readyState == 4 && this.status == 200) {
             osmData = req.response;
             console.log(osmData);
+            var tags = osmData.elements[0].tags;
+            var bounds = osmData.elements[0].bounds;
             // The following lines gather name, longitude and latidude from OSM JSON
-            name = osmData.elements[0].tags['name:en'];
+            if (tags['name:en'] != null) {
+              name = tags['name:en'];
+            }
+            else {
+              name = tags['name'];
+            }
             console.log(name);
             if (name != null) {
               if (locType == 'way' || locType == 'relation') {
-                lat = (osmData.elements[0].bounds.minlat + osmData.elements[0].bounds.maxlat) / 2;
+                lat = (bounds.minlat + bounds.maxlat) / 2;
                 console.log(lat);
-                lon = (osmData.elements[0].bounds.minlon + osmData.elements[0].bounds.maxlon) / 2;
+                lon = (bounds.minlon + bounds.maxlon) / 2;
                 console.log(lon);
               }
               else {
@@ -42,31 +49,32 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
                 lon = osmData.elements[0].lon;
                 console.log(lon);
               }
-              chrome.storage.local.set({ 'links_found': geoFunc(lat, lon, name) });
+              if (tags.place == 'city' || tags.type == 'boundary') {
+                searchFunc(lat, lon, name);
+              }
+              else {
+                links_found = geoFunc(lat, lon, name);
+              }
             }
             else {
               console.log("This is not a named location!");
+            }
+            if (links_found) {
+              chrome.pageAction.setPopup({
+                tabId: tabId,
+                popup: 'popup.html'
+              });
+            } else {
+              chrome.pageAction.setPopup({
+                tabId: tabId,
+                popup: 'popup_nolinks.html'
+              });
             }
           }
         }
       }
     });
   }
-});
-chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-  chrome.storage.local.get('links_found', function (data) {
-    if (data.links_found) {
-      chrome.pageAction.setPopup({
-        tabId: tabs[0].id,
-        popup: 'popup.html'
-      });
-    } else {
-      chrome.pageAction.setPopup({
-        tabId: tabs[0].id,
-        popup: 'popup_nolinks.html'
-      });
-    }
-  });
 });
 chrome.runtime.onInstalled.addListener(function () {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
