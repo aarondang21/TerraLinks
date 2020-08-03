@@ -9,13 +9,14 @@ function geoFunc(latitude, longitude, placeName) {
         list: "geosearch",
         gscoord: position,
         gsradius: "10000",
-        gslimit: "10",
+        gslimit: "500",
         format: "json",
     };
 
     url = url + "?origin=*";
     Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
 
+    console.log("Querying Wikipedia...");
     fetch(url)
         .then(function (response) { return response.json(); })
         .then(function (response) {
