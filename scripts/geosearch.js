@@ -17,7 +17,7 @@ function geoFunc(latitude, longitude, placeName) {
     Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
 
     console.log("Querying Wikipedia...");
-    fetch(url)
+    return fetch(url)
         .then(function (response) { return response.json(); })
         .then(function (response) {
             var pages = response.query.geosearch;
