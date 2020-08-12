@@ -23,14 +23,13 @@ function getNames(placeName, lon, lat) {
             var places = response.geonames
             i = 0;
             found = false;
-            while (i < 10) {
+            for (i = 0; i < 10; i++) {
                 this_lat = response.geonames.lat;
                 this_lon = response.geonames.lng;
                 if (this_lat - lat <= .1 && this_lat - lat >= -.1 || this_lon - lon <= .1 && this_lon - lon >= .1) {
                     found = true;
                     break;    
                 }
-                i++; 
             }
             if (!found) {
                 //no corresponding entity on geonames, returns only english
