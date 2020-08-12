@@ -49,13 +49,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             console.log(wikiName);
             var lang = wikiName.split(":")[0];
             wikiName = wikiName.replace(/ /g, "%20");
-            if (lang == 'en') {
-              var link = `https://en.wikipedia.org/wiki/${wikiName}?uselang=${lang}`
-              console.log(link);
-            }
-            else {
-              var link = `https://en.wikipedia.org/wiki/${wikiName}?uselang=${lang}`
-              console.log(link);
+            var link = `https://en.wikipedia.org/wiki/${wikiName}?uselang=${lang}`
+            console.log(link);
+            if (lang != 'en') {
               await searchFunc(lat, lon, name);
             }
           }
