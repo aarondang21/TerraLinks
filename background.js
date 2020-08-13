@@ -2,10 +2,16 @@
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete') {
     var links_found = false;
+    chrome.storage.local.set({ href1: null });
+    chrome.storage.local.set({ href2: null });
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, async tabs => {
       let url = tabs[0].url;
       if ((url.includes("https://www.openstreetmap.org/way/") || url.includes("https://www.openstreetmap.org/node/")
         || url.includes("https://www.openstreetmap.org/relation/")) && !(url.includes("#"))) {
+        chrome.pageAction.setPopup({
+          tabId: tabId,
+          popup: 'popup_loading.html'
+        });
         var pathArray = url.split('/'); // splits URL by slashes
         var locType = pathArray[3]; // way, relation or node
         var osm_id = pathArray[4]; // unique location identifier in OSM
@@ -49,7 +55,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             console.log(wikiName);
             var lang = wikiName.split(":")[0];
             wikiName = wikiName.replace(/ /g, "%20");
-            var link = `https://en.wikipedia.org/wiki/${wikiName}?uselang=${lang}`
+            var link = `https://en.wikipedia.org/wiki/${wikiName}?uselang=${lang}`;
+            chrome.storage.local.set({ href2: `https://en.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
             console.log(link);
             if (lang != 'en') {
               await searchFunc(lat, lon, name);
