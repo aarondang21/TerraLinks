@@ -5,6 +5,7 @@ h2 {
     margin-left: 5px;
     padding-top: 12px;
 }
+
 .header {
     background-color: black;
     text-align: center;
@@ -12,11 +13,13 @@ h2 {
     margin: 0px;
     overflow: hidden;
 }
+
 .icon {
     float: left;
     padding: 8px;
     max-width: 95%;
 }
+
 .linksFound {
     background-color: lightgreen;
     font-size: 16px;
@@ -26,6 +29,7 @@ h2 {
     border: 1px;
     margin: 10px;
 }
+
 .linksNotFound {
     background-color: lightcoral;
     font-size: 16px;
@@ -35,10 +39,12 @@ h2 {
     border: 1px;
     margin: 10px;
 }
+
 .back {
     background-color: white;
     height: 200px;
 }
+
 .msgN {
     font-size: 16px;
     background-color: lightgrey;
@@ -50,6 +56,7 @@ h2 {
     height: 30%;
     line-height: 58px;
 }
+
 .msgF {
     font-size: 16px;
     background-color: lightgrey;
@@ -60,13 +67,70 @@ h2 {
     margin: 10px;
     height: 30%;
 }
+
 .settings {
     float: right;
     max-width: 4%;
     padding-right: 15px;
     padding-top: 15px;
 }
-*, html {
-    margin:0;
-    padding:0;  
+
+.loader {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    border: 4px solid #Fff;
+    top: 50%;
+    animation: loader 2s infinite ease;
+}
+
+.loader-inner {
+    vertical-align: top;
+    display: inline-block;
+    width: 100%;
+    background-color: #fff;
+    animation: loader-inner 2s infinite ease-in;
+}
+
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(180deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    75% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loader-inner {
+    0% {
+        height: 0%;
+    }
+    25% {
+        height: 0%;
+    }
+    50% {
+        height: 100%;
+    }
+    75% {
+        height: 100%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+*,
+html {
+    margin: 0;
+    padding: 0;
 }
