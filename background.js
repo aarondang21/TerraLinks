@@ -2,12 +2,12 @@
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete') {
     var links_found = false;
-    chrome.storage.local.set({ href1: null });
-    chrome.storage.local.set({ href2: null });
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, async tabs => {
       let url = tabs[0].url;
       if ((url.includes("https://www.openstreetmap.org/way/") || url.includes("https://www.openstreetmap.org/node/")
         || url.includes("https://www.openstreetmap.org/relation/")) && !(url.includes("#"))) {
+        chrome.storage.local.set({ href1: null });
+        chrome.storage.local.set({ href2: null });
         chrome.pageAction.setPopup({
           tabId: tabId,
           popup: 'popup_loading.html'
@@ -75,6 +75,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             popup: 'popup.html'
           });
         } else {
+          chrome.storage.local.set({ href1: null });
+          chrome.storage.local.set({ href2: null });
           chrome.pageAction.setPopup({
             tabId: tabId,
             popup: 'popup_nolinks.html'
@@ -85,6 +87,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   }
 });
 chrome.runtime.onInstalled.addListener(function () {
+  chrome.storage.local.set({ href1: null });
+  chrome.storage.local.set({ href2: null });
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({
