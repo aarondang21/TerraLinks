@@ -25,7 +25,7 @@
         "128": "images/map_128.png"
       },
     "background": {
-        "scripts": ["scripts/geosearch.js", "scripts/search.js", "background.js"],
+        "scripts": ["scripts/geosearch.js", "scripts/search.js", "scripts/langsearch.js", "background.js", "geonames.js"],
         "persistent": false
     },
     "permissions": [

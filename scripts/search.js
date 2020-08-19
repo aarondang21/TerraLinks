@@ -1,7 +1,11 @@
 async function searchFunc(latitude, longitude, placeName) {
 
+    placeName = "London";
+    latitude = 52.3555;
+    longitude = -1.1743;
+
     var url = "https://en.wikipedia.org/w/api.php";
-    chrome.storage.local.set({href1: null});
+    //chrome.storage.local.set({href1: null});
 
     var params = {
         action: "query",
@@ -33,7 +37,7 @@ async function searchFunc(latitude, longitude, placeName) {
             if ((lat - latitude <= 0.5 && lat - latitude >= -0.5) && (lon - longitude <= 0.5 && lon - longitude >= -0.5)) {
                 console.log("http://en.wikipedia.org/?curid=" + id);
                 status = true;
-                chrome.storage.local.set({href1: "http://en.wikipedia.org/?curid=" + id});
+                //chrome.storage.local.set({href1: "http://en.wikipedia.org/?curid=" + id});
                 break;
             }
         }
