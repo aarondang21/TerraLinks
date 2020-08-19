@@ -1,16 +1,18 @@
 // popup.js
-chrome.storage.local.get(['href1'], function(result) {
-    if (result.href1 != null) {
+chrome.storage.local.get(['href_en'], function(result) {
+    if (result.href_en != null) {
         let oldDiv = document.getElementsByClassName("msgF")[0];
         let a = document.createElement('a');
         var linkText;
         linkText = document.createTextNode("English");
         a.appendChild(linkText);
         a.title = "algLink";
-        a.href = `${result.href1}`;
+        a.href = `${result.href_en}`;
         oldDiv.appendChild(a);
     }
 });
+
+/*
 chrome.storage.local.get(['href2'], function(result) {
     if (result.href2 != null) {
         let oldDiv = document.getElementsByClassName("msgF")[0];
@@ -27,6 +29,8 @@ chrome.storage.local.get(['href2'], function(result) {
         oldDiv.appendChild(a);
     }
 });
+*/
+
 
 document.getElementsByTagName("BODY")[0].onclick = function(e) {
     e = e || event

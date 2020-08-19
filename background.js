@@ -6,8 +6,13 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
       let url = tabs[0].url;
       if ((url.includes("https://www.openstreetmap.org/way/") || url.includes("https://www.openstreetmap.org/node/")
         || url.includes("https://www.openstreetmap.org/relation/")) && !(url.includes("#"))) {
-        chrome.storage.local.set({ href1: null });
-        chrome.storage.local.set({ href2: null });
+        //sets all links to null 
+        chrome.storage.local.set({ href_en: null });
+        chrome.storage.local.set({ href_es: null });
+        chrome.storage.local.set({ href_fr: null });
+        chrome.storage.local.set({ href_ge: null });
+        chrome.storage.local.set({ href_ar: null });
+        chrome.storage.local.set({ href_other: null });
         chrome.pageAction.setPopup({
           tabId: tabId,
           popup: 'popup_loading.html'
@@ -55,15 +60,47 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             console.log(wikiName);
             var lang = wikiName.split(":")[0];
             wikiName = wikiName.replace(/ /g, "%20");
-            var link = `https://en.wikipedia.org/wiki/${wikiName}?uselang=${lang}`;
-            chrome.storage.local.set({ href2: `https://en.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
+            var link = `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}`;
             console.log(link);
-            if (lang != 'en') {
-              await searchFunc(lat, lon, name);
+
+            //sets cooresponding href to the link with the correct language
+            if (lang == "en") {
+              chrome.storage.local.set({href_en: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
+            }
+            else if (lang == "es") {
+              chrome.storage.local.set({href_es: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
+            }
+            else if (lang == "fr") {
+              chrome.storage.local.set({href_fr: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
+            }
+            else if (lang == "ge") {
+              chrome.storage.local.set({href_ge: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
+            }
+            else if (lang == "ar") {
+              chrome.storage.local.set({href_ar: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
+            }
+            else {
+              chrome.storage.local.set({href_other: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
+            }
+            
+            //gets list of names in selected languages
+            names = await getNames(name, lon, lat);
+            for (var i in names) {
+              if (lang != names[i]["lang"]) { //prevents overwriting provided link from OSM
+                found = await langFunc(lat, lon, names[i]["name"], names[i]["lang"] )
+                if (found) { //prevents links_found from being changed back to false
+                  links_found = true;
+                }
+              }
             }
           }
           else {
-            links_found = await searchFunc(lat, lon, name);
+            for (var i in names) {
+              found = await langFunc(lat, lon, name);
+              if (found) {
+                links_found = true;
+              }
+            }
           }
         }
         else {
@@ -75,8 +112,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             popup: 'popup.html'
           });
         } else {
-          chrome.storage.local.set({ href1: null });
-          chrome.storage.local.set({ href2: null });
+          chrome.storage.local.set({ href_en: null });
+          chrome.storage.local.set({ href_es: null });
+          chrome.storage.local.set({ href_fr: null });
+          chrome.storage.local.set({ href_ge: null });
+          chrome.storage.local.set({ href_ar: null });
+          chrome.storage.local.set({ href_other: null });
           chrome.pageAction.setPopup({
             tabId: tabId,
             popup: 'popup_nolinks.html'
@@ -87,8 +128,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   }
 });
 chrome.runtime.onInstalled.addListener(function () {
-  chrome.storage.local.set({ href1: null });
-  chrome.storage.local.set({ href2: null });
+  chrome.storage.local.set({ href_en: null });
+  chrome.storage.local.set({ href_es: null });
+  chrome.storage.local.set({ href_fr: null });
+  chrome.storage.local.set({ href_ge: null });
+  chrome.storage.local.set({ href_ar: null });
+  chrome.storage.local.set({ href_other: null });
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({
