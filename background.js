@@ -95,6 +95,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             }
           }
           else {
+            names = await getNames(name, lon, lat);
             for (var i in names) {
               found = await langFunc(lat, lon, name);
               if (found) {
