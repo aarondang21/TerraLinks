@@ -27,6 +27,9 @@ function getNames(placeName, lon, lat) {
             console.log(response);})
         .then(function (response) {
             var places = response.geonames; //list of possible locations
+
+            console.log(places);
+
             var allNames; //list of names of identified location in different languages
             var names = []; //list of selected names (english, french, german, italian, and local tongue)
             i = 0;
