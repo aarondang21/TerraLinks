@@ -1,4 +1,4 @@
-function getNames(placeName, lon, lat) {
+async function getNames(placeName, lon, lat) {
 
     var url = "http://api.geonames.org/searchJSON?"
 
@@ -19,49 +19,47 @@ function getNames(placeName, lon, lat) {
     url = url + "?origin=*";
     Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
 
-    console.log(url);
+    //console.log(url);
 
-    fetch(url)
-        .then(function (response) {
-            return response.json(); 
-            console.log(response);})
-        .then(function (response) {
-            var places = response.geonames; //list of possible locations
+    let response = await fetch(url);
+    let data = await response.json();
+    var places = data.geonames; //list of possible locations
 
-            console.log(places);
+    console.log(places);
 
-            var allNames; //list of names of identified location in different languages
-            var names = []; //list of selected names (english, french, german, italian, and local tongue)
-            i = 0;
-            var found = false;
-            for (j = 0; j < 10; j++) {
-                this_lat = places[j].lat;
-                this_lon = places[j].lng;
-                if (this_lat - lat <= .5 && this_lat - lat >= -.5 || this_lon - lon <= .5 && this_lon - lon >= .5) {
-                    allNames = response.geonames[j].alternateNames;
-                    found = true;
-                    break;    
-                }
+    var allNames = []; //list of names of identified location in different languages
+    var names = []; //list of selected names (english, french, german, italian, and local tongue)
+    var found = false;
+    j = 0;
+    while (j < 10 && j < places.length) {
+        this_lat = places[j].lat;
+        this_lon = places[j].lng;
+        if (this_lat - lat <= .5 && this_lat - lat >= -.5 || this_lon - lon <= .5 && this_lon - lon >= .5) {
+            allNames = data.geonames[j].alternateNames;
+            found = true;
+            break;    
+        }
+        j++;
+    }
+    if (!found) {
+        //no corresponding entity on geonames, returns only english
+        console.log("no alternate names found...");
+        oneName = {name: placeName, lang: "en"}
+        console.log(oneName);
+        names.push(oneName);
+    }
+    else {
+        console.log("list of alternate names found...");
+        for (i in allNames) {
+            //returns english, french, german, italian, and preferred local tongue
+            if (allNames[i]["lang"] == "en" || allNames[i]["lang"] == "fr" || allNames[i]["lang"] == "de" || allNames[i]["lang"] == "es" || allNames[i]["lang"] == "ar" || allNames[i]["isPreferredName"] == true) {
+                console.log(allNames[i]);
+                names.push(allNames[i]);
             }
-            if (!found) {
-                //no corresponding entity on geonames, returns only english
-                console.log("no alternate names found...");
-                console.log(placeName);
-                names.push(placeName);
-            }
-            else {
-                console.log("list of alternate names found...");
-                for (i in allNames) {
-                    //returns english, french, german, italian, and preferred local tongue
-                    if (allNames[i]["lang"] == "en" || allNames[i]["lang"] == "fr" || allNames[i]["lang"] == "de" || allNames[i]["lang"] == "it" || allNames[i]["lang"] == "ar" || allNames[i]["isPreferredName"] == true) {
-                        console.log(allNames[i]);
-                        names.push(allNames[i]);
-                    }
-                }
-            }
-            return names; 
-        })
-        .catch(function (error) { console.log(error); });
+        }
+    }
+    console.log(names);
+    return names;
 }
 
     
