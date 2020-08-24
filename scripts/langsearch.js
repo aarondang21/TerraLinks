@@ -1,4 +1,4 @@
-async function langFunc(latitude, longitude, placeName, lang = "en") {
+async function langFunc(latitude, longitude, placeName, lang = "en", lonDiff = 0.5, latDiff = 0.5) {
 
     //test
     //placeName = "لندن";
@@ -71,7 +71,7 @@ async function langFunc(latitude, longitude, placeName, lang = "en") {
             lon = data2.query.pages[id].coordinates[0].lon;
             console.log(lat);
             console.log(lon);
-            if ((lat - latitude <= 0.5 && lat - latitude >= -0.5) && (lon - longitude <= 0.5 && lon - longitude >= -0.5)) {
+            if ((lat - latitude <= latDiff && lat - latitude >= -latDiff) && (lon - longitude <= lonDiff && lon - longitude >= -lonDiff)) {
                 
                 console.log(`http://${lang}.wikipedia.org/?curid=` + id);
                 status = true;

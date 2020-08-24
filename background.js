@@ -23,7 +23,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         var osmData; // stores OSM data in JSON format
         var lat; // latitude
         var lon; // longitude
-        var name // location's name
+        var name; // location's name
+        var latDiff; // difference between max lat and min lat
+        var lonDiff; // difference between max lon and min lon
         var queryUrl = `https://overpass-api.de/api/interpreter?data=[out:json][timeout:25];${locType}(${osm_id});out tags bb;`;
         console.log("Querying Overpass... this may take a while");
 
@@ -33,7 +35,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         console.log(osmData);
         var tags = osmData.elements[0].tags;
         var bounds = osmData.elements[0].bounds;
-        // The following lines gather name, longitude and latidude from OSM JSON
         if (tags['name:en'] != null) {
           name = tags['name:en'];
         }
@@ -44,8 +45,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         if (name != null) {
           if (locType == 'way' || locType == 'relation') {
             lat = (bounds.minlat + bounds.maxlat) / 2;
+            latDiff = bounds.minlat - bounds.maxlat;
             console.log(lat);
             lon = (bounds.minlon + bounds.maxlon) / 2;
+            lonDiff = bounds.minlon - bounds.maxlon;
             console.log(lon);
           }
           else {
@@ -87,10 +90,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             //gets list of names in selected languages
             var names = "test";
             console.log(names);
-            names = await getNames(name, lon, lat);
+            names = await getNames(name, lon, lat, lonDiff, latDiff);
             for (var i in names) {
               if (lang != names[i]["lang"]) { //prevents overwriting provided link from OSM
-                found = await langFunc(lat, lon, names[i]["name"], names[i]["lang"]);
+                found = await langFunc(lat, lon, names[i]["name"], names[i]["lang"], lonDiff, latDiff);
                 if (found) { //prevents links_found from being changed back to false
                   links_found = true;
                 }
@@ -99,9 +102,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
           }
           else {
             console.log("no link found in tags");
-            names = await getNames(name, lon, lat);
+            names = await getNames(name, lon, lat, lonDiff, latDiff);
             for (var i in names) {
-              found = await langFunc(lat, lon, names[i]["name"], names[i]["lang"]);
+              found = await langFunc(lat, lon, names[i]["name"], names[i]["lang"], lonDiff, latDiff);
               if (found) {
                 links_found = true;
               }
