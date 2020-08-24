@@ -1,4 +1,4 @@
-async function getNames(placeName, lon, lat) {
+async function getNames(placeName, lon, lat, lonDiff = 0.5, latDiff = 0.5) {
 
     var url = "http://api.geonames.org/searchJSON?"
 
@@ -34,7 +34,7 @@ async function getNames(placeName, lon, lat) {
     while (j < 10 && j < places.length) {
         this_lat = places[j].lat;
         this_lon = places[j].lng;
-        if (this_lat - lat <= .5 && this_lat - lat >= -.5 || this_lon - lon <= .5 && this_lon - lon >= .5) {
+        if (this_lat - lat <= latDiff && this_lat - lat >= -latDiff || this_lon - lon <= lonDiff && this_lon - lon >= -latDiff) {
             allNames = data.geonames[j].alternateNames;
             found = true;
             break;    
