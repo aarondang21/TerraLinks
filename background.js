@@ -10,7 +10,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         chrome.storage.local.set({ href_en: null });
         chrome.storage.local.set({ href_es: null });
         chrome.storage.local.set({ href_fr: null });
-        chrome.storage.local.set({ href_ge: null });
+        chrome.storage.local.set({ href_de: null });
         chrome.storage.local.set({ href_ar: null });
         chrome.storage.local.set({ href_other: null });
         chrome.pageAction.setPopup({
@@ -61,6 +61,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             var lang = wikiName.split(":")[0];
             wikiName = wikiName.replace(/ /g, "%20");
             var link = `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}`;
+            console.log("found link in tags");
             console.log(link);
 
             //sets cooresponding href to the link with the correct language
@@ -73,8 +74,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             else if (lang == "fr") {
               chrome.storage.local.set({href_fr: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
             }
-            else if (lang == "ge") {
-              chrome.storage.local.set({href_ge: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
+            else if (lang == "de") {
+              chrome.storage.local.set({href_de: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
             }
             else if (lang == "ar") {
               chrome.storage.local.set({href_ar: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
@@ -84,10 +85,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             }
             
             //gets list of names in selected languages
+            var names = "test";
+            console.log(names);
             names = await getNames(name, lon, lat);
             for (var i in names) {
               if (lang != names[i]["lang"]) { //prevents overwriting provided link from OSM
-                found = await langFunc(lat, lon, names[i]["name"], names[i]["lang"] )
+                found = await langFunc(lat, lon, names[i]["name"], names[i]["lang"]);
                 if (found) { //prevents links_found from being changed back to false
                   links_found = true;
                 }
@@ -95,9 +98,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             }
           }
           else {
+            console.log("no link found in tags");
             names = await getNames(name, lon, lat);
             for (var i in names) {
-              found = await langFunc(lat, lon, name);
+              found = await langFunc(lat, lon, names[i]["name"], names[i]["lang"]);
               if (found) {
                 links_found = true;
               }
@@ -108,15 +112,17 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
           console.log("This is not a named location!");
         }
         if (links_found) {
+          console.log("Links were found!");
           chrome.pageAction.setPopup({
             tabId: tabId,
             popup: 'popup.html'
           });
         } else {
+          console.log("No links were found!");
           chrome.storage.local.set({ href_en: null });
           chrome.storage.local.set({ href_es: null });
           chrome.storage.local.set({ href_fr: null });
-          chrome.storage.local.set({ href_ge: null });
+          chrome.storage.local.set({ href_de: null });
           chrome.storage.local.set({ href_ar: null });
           chrome.storage.local.set({ href_other: null });
           chrome.pageAction.setPopup({
@@ -132,7 +138,7 @@ chrome.runtime.onInstalled.addListener(function () {
   chrome.storage.local.set({ href_en: null });
   chrome.storage.local.set({ href_es: null });
   chrome.storage.local.set({ href_fr: null });
-  chrome.storage.local.set({ href_ge: null });
+  chrome.storage.local.set({ href_de: null });
   chrome.storage.local.set({ href_ar: null });
   chrome.storage.local.set({ href_other: null });
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {

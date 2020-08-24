@@ -1,4 +1,4 @@
-async function langFunc(latitude, longitude, placeName, lang) {
+async function langFunc(latitude, longitude, placeName, lang = "en") {
 
     //test
     //placeName = "لندن";
@@ -7,7 +7,7 @@ async function langFunc(latitude, longitude, placeName, lang) {
     //lang = "en"
     //latitude = 51.5074;
     //longitude = -.1278;
-   
+
     if (lang == "en") {
         chrome.storage.local.set({href_en: null});
     }
@@ -18,7 +18,7 @@ async function langFunc(latitude, longitude, placeName, lang) {
         chrome.storage.local.set({href_fr: null});
     }
     else if (lang == "ge") {
-        chrome.storage.local.set({href_ge: null});
+        chrome.storage.local.set({href_de: null});
     }
     else if (lang == "ar") {
         chrome.storage.local.set({href_ar: null});
@@ -74,7 +74,6 @@ async function langFunc(latitude, longitude, placeName, lang) {
             if ((lat - latitude <= 0.5 && lat - latitude >= -0.5) && (lon - longitude <= 0.5 && lon - longitude >= -0.5)) {
                 
                 console.log(`http://${lang}.wikipedia.org/?curid=` + id);
-                console.log("test1");
                 status = true;
                 
                 if (lang == "en") {
@@ -86,8 +85,8 @@ async function langFunc(latitude, longitude, placeName, lang) {
                 else if (lang == "fr") {
                     chrome.storage.local.set({href_fr: `http://${lang}.wikipedia.org/?curid=` + id});
                 }
-                else if (lang == "ge") {
-                    chrome.storage.local.set({href_ge: `http://${lang}.wikipedia.org/?curid=` + id});
+                else if (lang == "de") {
+                    chrome.storage.local.set({href_de: `http://${lang}.wikipedia.org/?curid=` + id});
                 }
                 else if (lang == "ar") {
                     chrome.storage.local.set({href_ar: `http://${lang}.wikipedia.org/?curid=` + id});
@@ -95,16 +94,17 @@ async function langFunc(latitude, longitude, placeName, lang) {
                 else {
                     chrome.storage.local.set({href_other: `http://${lang}.wikipedia.org/?curid=` + id});
                 }
+
                 break;
             }
         }
     }   
     if(status) {
-        console.log("Links found!")
+        console.log("langsearch found link!")
     }
 
     else {
-        console.log("No links found!");
+        //console.log("No links found!");
     }
     return status;
 }
