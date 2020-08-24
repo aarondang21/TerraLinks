@@ -34,6 +34,12 @@
         "activeTab",
         "declarativeContent",
         "https://www.openstreetmap.org/*",
-        "https://en.wikipedia.org/*"
+        "https://en.wikipedia.org/*",
+        "https://fr.wikipedia.org/*",
+        "https://es.wikipedia.org/*",
+        "https://de.wikipedia.org/*",
+        "https://ar.wikipedia.org/*",
+        "https://www.geonames.org/*"
+
     ]
 }
