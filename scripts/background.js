@@ -18,7 +18,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
           var links_found = false;
           chrome.pageAction.setPopup({
             tabId: tabId,
-            popup: 'popup_loading.html'
+            popup: 'popup/popup_loading.html'
           });
           var pathArray = url.split('/'); // splits URL by slashes
           var locType = pathArray[3]; // way, relation or node
@@ -126,7 +126,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             console.log("Links were found!");
             chrome.pageAction.setPopup({
               tabId: tabId,
-              popup: 'popup.html'
+              popup: 'popup/popup.html'
             });
           } else {
             console.log("No links were found!");
@@ -138,7 +138,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             chrome.storage.local.set({ href_other: null });
             chrome.pageAction.setPopup({
               tabId: tabId,
-              popup: 'popup_nolinks.html'
+              popup: 'popup/popup_nolinks.html'
             });
           }
         }
