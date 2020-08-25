@@ -64,6 +64,19 @@ chrome.storage.local.get(['href_ar'], function(result) {
     }
 });
 
+chrome.storage.local.get(['href_it'], function(result) {
+    if (result.href_it != null) {
+        let oldDiv = document.getElementsByClassName("msgF")[0];
+        let a = document.createElement('a');
+        var linkText;
+        linkText = document.createTextNode("Italian");
+        a.appendChild(linkText);
+        a.title = "it_Link";
+        a.href = `${result.href_it}`;
+        oldDiv.appendChild(a);
+    }
+});
+
 chrome.storage.local.get(['href_other'], function(result) {
     if (result.href_other != null) {
         let oldDiv = document.getElementsByClassName("msgF")[0];
