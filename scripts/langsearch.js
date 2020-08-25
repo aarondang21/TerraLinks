@@ -15,6 +15,9 @@ async function langFunc(latitude, longitude, placeName, lang = "en", lonDiff = 0
     else if (lang == "ar") {
         chrome.storage.local.set({ href_ar: null });
     }
+    else if (lang == "it") {
+        chrome.storage.local.set({ href_it: null });
+    }
     else {
         chrome.storage.local.set({ href_other: null });
     }
@@ -81,22 +84,25 @@ async function langFunc(latitude, longitude, placeName, lang = "en", lonDiff = 0
                 status = true;
 
                 if (lang == "en") {
-                    chrome.storage.local.set({ href_en: `http://${lang}.wikipedia.org/?curid=` + id });
+                    chrome.storage.local.set({ href_en: `http://${lang}.wikipedia.org/?curid=${id}` });
                 }
                 else if (lang == "es") {
-                    chrome.storage.local.set({ href_es: `http://${lang}.wikipedia.org/?curid=` + id });
+                    chrome.storage.local.set({ href_es: `http://${lang}.wikipedia.org/?curid=${id}` });
                 }
                 else if (lang == "fr") {
-                    chrome.storage.local.set({ href_fr: `http://${lang}.wikipedia.org/?curid=` + id });
+                    chrome.storage.local.set({ href_fr: `http://${lang}.wikipedia.org/?curid=${id}` });
                 }
                 else if (lang == "de") {
-                    chrome.storage.local.set({ href_de: `http://${lang}.wikipedia.org/?curid=` + id });
+                    chrome.storage.local.set({ href_de: `http://${lang}.wikipedia.org/?curid=${id}` });
                 }
                 else if (lang == "ar") {
-                    chrome.storage.local.set({ href_ar: `http://${lang}.wikipedia.org/?curid=` + id });
+                    chrome.storage.local.set({ href_ar: `http://${lang}.wikipedia.org/?curid=${id}` });
+                }
+                else if (lang == "it") {
+                    chrome.storage.local.set({ href_it: `https://${lang}.wikipedia.org/?curid=${id}` });
                 }
                 else {
-                    chrome.storage.local.set({ href_other: `http://${lang}.wikipedia.org/?curid=` + id });
+                    chrome.storage.local.set({ href_other: `http://${lang}.wikipedia.org/?curid=${id}` });
                 }
 
                 break;

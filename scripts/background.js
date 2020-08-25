@@ -92,6 +92,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
               else if (lang == "ar") {
                 chrome.storage.local.set({ href_ar: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
               }
+              else if (lang == "it") {
+                chrome.storage.local.set({ href_it: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
+              }
               else {
                 chrome.storage.local.set({ href_other: `https://${lang}.wikipedia.org/wiki/${wikiName}?uselang=${lang}` });
               }
