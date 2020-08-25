@@ -14,7 +14,7 @@ Due to the nature of Chrome popup extensions, the popup window cannot be dynamic
 The program runs almost exclusively out of the background file. We did not use a content script as all relevant data was contained within the browser and not the DOM tree. 
 
 # Supported languages
-Currently, our algorithm only parses the Wikipedia database for English, French, German, Spanish, and Arabic articles. We can update the application in the future to allow users to specify which languages they would like their articles to appear in. This application has the potential to support all languages relatively easily.
+Currently, our algorithm only parses the Wikipedia database for English, French, German, Spanish, Arabic, and Italian articles. We can update the application in the future to allow users to specify which languages they would like their articles to appear in. This application has the potential to support all languages relatively easily.
 
 # Reliance on Database quality
 By and large, most errors with our algorithm occur as a result of bad documentation across databases. Here are some examples:
