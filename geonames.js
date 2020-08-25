@@ -2,11 +2,6 @@ async function getNames(placeName, lon, lat, lonDiff = 0.5, latDiff = 0.5) {
 
     var url = "http://api.geonames.org/searchJSON?"
 
-    //test
-    //placeName = "London"
-    //lat = 51.5074
-    //lon = -0.1278
-
     var params = {
 
         q: placeName,
@@ -18,8 +13,6 @@ async function getNames(placeName, lon, lat, lonDiff = 0.5, latDiff = 0.5) {
 
     url = url + "?origin=*";
     Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
-
-    //console.log(url);
 
     let response = await fetch(url);
     let data = await response.json();
@@ -43,13 +36,13 @@ async function getNames(placeName, lon, lat, lonDiff = 0.5, latDiff = 0.5) {
     }
     if (!found) {
         //no corresponding entity on geonames, returns only english
-        console.log("no alternate names found...");
+        console.log("No alternate names found...");
         oneName = {name: placeName, lang: "en"}
         console.log(oneName);
         names.push(oneName);
     }
     else {
-        console.log("list of alternate names found...");
+        console.log("List of alternate names found...");
         for (i in allNames) {
             //returns english, french, german, italian, and preferred local tongue
             if (allNames[i]["lang"] == "en" || allNames[i]["lang"] == "fr" || allNames[i]["lang"] == "de" || allNames[i]["lang"] == "es" || allNames[i]["lang"] == "ar" || allNames[i]["isPreferredName"] == true) {
