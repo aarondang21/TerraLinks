@@ -1,9 +1,10 @@
-function getNames(placeName, lon, lat) {
+async function getNames(placeName, lon, lat, lonDiff = 0.5, latDiff = 0.5) {
 
     var url = "http://api.geonames.org/searchJSON?"
 
     var params = {
-        q: "London",
+
+        q: placeName,
         maxRows: "10",
         lang: "en",
         username: "aarondang1111",
@@ -13,36 +14,45 @@ function getNames(placeName, lon, lat) {
     url = url + "?origin=*";
     Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
 
-    console.log(url);
+    let response = await fetch(url);
+    let data = await response.json();
+    var places = data.geonames; //list of possible locations
 
-    fetch(url)
-        .then(function (response) {
-            return response.json(); 
-            console.log(response);})
-        .then(function (response) {
-            var places = response.geonames
-            i = 0;
-            found = false;
-            for (i = 0; i < 10; i++) {
-                this_lat = response.geonames.lat;
-                this_lon = response.geonames.lng;
-                if (this_lat - lat <= .1 && this_lat - lat >= -.1 || this_lon - lon <= .1 && this_lon - lon >= .1) {
-                    found = true;
-                    break;    
-                }
+    console.log(places);
+
+    var allNames = []; //list of names of identified location in different languages
+    var names = []; //list of selected names (english, french, german, italian, and local tongue)
+    var found = false;
+    j = 0;
+    while (j < 10 && j < places.length) {
+        this_lat = places[j].lat;
+        this_lon = places[j].lng;
+        if (this_lat - lat <= latDiff && this_lat - lat >= -latDiff || this_lon - lon <= lonDiff && this_lon - lon >= -latDiff) {
+            allNames = data.geonames[j].alternateNames;
+            found = true;
+            break;    
+        }
+        j++;
+    }
+    if (!found) {
+        //no corresponding entity on geonames, returns only english
+        console.log("No alternate names found...");
+        oneName = {name: placeName, lang: "en"}
+        console.log(oneName);
+        names.push(oneName);
+    }
+    else {
+        console.log("List of alternate names found...");
+        for (i in allNames) {
+            //returns english, french, german, italian, and preferred local tongue
+            if (allNames[i]["lang"] == "en" || allNames[i]["lang"] == "fr" || allNames[i]["lang"] == "de" || allNames[i]["lang"] == "es" || allNames[i]["lang"] == "ar" || allNames[i]["isPreferredName"] == true) {
+                console.log(allNames[i]);
+                names.push(allNames[i]);
             }
-            if (!found) {
-                //no corresponding entity on geonames, returns only english
-                console.log(placeName)
-            }
-            var names = response.geonames[0].alternateNames; 
-            for (i in names) {
-                //returns english, french, german, italian, and preferred local tongue
-                if (names[i]["lang"] == "en" || names[i]["lang"] == "fr" || names[i]["lang"] == "de" || names[i]["lang"] == "it" || names[i]["lang"] == "ar" || names[i]["isPreferredName"] == true) {
-                    console.log(names[i]);}
-                } 
-            })
-        .catch(function (error) { console.log(error); });
+        }
+    }
+    console.log(names);
+    return names;
 }
 
     

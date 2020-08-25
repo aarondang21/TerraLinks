@@ -65,7 +65,7 @@ h2 {
     padding: 4px;
     border: 1px;
     margin: 10px;
-    height: 33%;
+    min-height: 33%;
 }
 
 a {
@@ -80,7 +80,7 @@ a {
     overflow: hidden;
 }
 
-.settings {
+.stat {
     float: right;
     max-width: 4%;
     padding-right: 15px;
