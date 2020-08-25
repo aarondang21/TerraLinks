@@ -39,7 +39,7 @@ async function langFunc(latitude, longitude, placeName, lang = "en", lonDiff = 0
         let data1 = await response1.json();
         var pages1 = data1.query.search;
     }
-    catch(err) {
+    catch (err) {
         console.log("Invalid link, moving on...");
         return;
     }
@@ -61,10 +61,16 @@ async function langFunc(latitude, longitude, placeName, lang = "en", lonDiff = 0
         url2 = url2 + "?origin=*";
         Object.keys(params2).forEach(function (key) { url2 += "&" + key + "=" + params2[key]; });
 
-        let response2 = await fetch(url2);
-        let data2 = await response2.json();
+        try {
+            var response2 = await fetch(url2);
+            var data2 = await response2.json();
+        }
+        catch (err) {
+            console.log("Invalid link, moving on...");
+            break;
+        }
         console.log(data2.query.pages[id]);
-        if (Object.keys(data2.query.pages[id]).includes("coordinates")) {
+        if (data2.query.pages[id] != null && Object.keys(data2.query.pages[id]).includes("coordinates")) {
             lat = data2.query.pages[id].coordinates[0].lat;
             lon = data2.query.pages[id].coordinates[0].lon;
             console.log(lat);

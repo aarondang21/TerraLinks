@@ -64,6 +64,19 @@ chrome.storage.local.get(['href_ar'], function(result) {
     }
 });
 
+chrome.storage.local.get(['href_other'], function(result) {
+    if (result.href_other != null) {
+        let oldDiv = document.getElementsByClassName("msgF")[0];
+        let a = document.createElement('a');
+        var linkText;
+        linkText = document.createTextNode("Other");
+        a.appendChild(linkText);
+        a.title = "other_Link";
+        a.href = `${result.href_other}`;
+        oldDiv.appendChild(a);
+    }
+});
+
 document.getElementsByTagName("BODY")[0].onclick = function(e) {
     e = e || event
     var target = e.target || e.srcElement
