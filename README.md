@@ -1,4 +1,4 @@
-# OSM GEOData Tool
+# TerraLinks
 To allow users to easily extract information from the OpenStreetMap GIS, this Google Chrome extension automatically finds relevant Wikipedia articles about a selected map feature in many different languages and places them in a pop-up window. Used as a proof-of-concept for improving NATO's existing GIS software.
 
 # Program Details
