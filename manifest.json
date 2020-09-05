@@ -4,12 +4,8 @@
     "description": "Fetches relevant Wikipedia links for OSM locations.",
     "manifest_version": 2,
     
-    "content_scripts": [ {
-        "matches": ["<all_urls>"],
-        "js": ["content.js"]
-    } ],
     "page_action": {
-        "default_popup": "popup_nolinks.html",
+        "default_popup": "popup/popup_nolinks.html",
         "default_title": "GEOData",
         "default_icon": {
             "16": "images/map_16.png",
@@ -25,7 +21,7 @@
         "128": "images/map_128.png"
       },
     "background": {
-        "scripts": ["scripts/geosearch.js", "scripts/search.js", "background.js"],
+        "scripts": ["scripts/background.js", "scripts/geonames.js", "scripts/langsearch.js"],
         "persistent": false
     },
     "permissions": [
@@ -34,6 +30,12 @@
         "activeTab",
         "declarativeContent",
         "https://www.openstreetmap.org/*",
-        "https://en.wikipedia.org/*"
+        "https://en.wikipedia.org/*",
+        "https://fr.wikipedia.org/*",
+        "https://es.wikipedia.org/*",
+        "https://de.wikipedia.org/*",
+        "https://ar.wikipedia.org/*",
+        "https://www.geonames.org/*"
+
     ]
 }
