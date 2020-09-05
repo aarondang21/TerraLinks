@@ -139,10 +139,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             chrome.storage.local.set({ href_fr: null });
             chrome.storage.local.set({ href_de: null });
             chrome.storage.local.set({ href_ar: null });
-<<<<<<< HEAD
-=======
             chrome.storage.local.set({ href_it: null });
->>>>>>> 69c94edd057ade609d3158ffcf40be3021ed6f13
             chrome.storage.local.set({ href_other: null });
             chrome.pageAction.setPopup({
               tabId: tabId,
@@ -160,10 +157,7 @@ chrome.runtime.onInstalled.addListener(function () {
   chrome.storage.local.set({ href_fr: null });
   chrome.storage.local.set({ href_de: null });
   chrome.storage.local.set({ href_ar: null });
-<<<<<<< HEAD
-=======
   chrome.storage.local.set({ href_it: null });
->>>>>>> 69c94edd057ade609d3158ffcf40be3021ed6f13
   chrome.storage.local.set({ href_other: null });
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
     chrome.declarativeContent.onPageChanged.addRules([{
