@@ -68,6 +68,17 @@ h2 {
     min-height: 33%;
 }
 
+.allNames {
+    font-size: 16px;
+    background-color: lightgrey;
+    border-radius: 4px;
+    text-align: center;
+    padding: 4px;
+    border: 1px;
+    margin: 10px;
+    min-height: 33%;
+}
+
 a {
     display: block;
     padding-top: 3px;
