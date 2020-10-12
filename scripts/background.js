@@ -114,6 +114,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             }
             else {
               console.log("No link found in tags");
+              found = await langFunc(lat, lon, name, "en", lonDiff, latDiff);
+              if (found) {
+                links_found = true;
+              }
               names = await getNames(name, lon, lat, lonDiff, latDiff);
               for (var i in names) {
                 found = await langFunc(lat, lon, names[i]["name"], names[i]["lang"], lonDiff, latDiff);
